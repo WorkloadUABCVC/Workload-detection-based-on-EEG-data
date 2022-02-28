@@ -1,4 +1,4 @@
-# Workload-Detection-Based-on-EEG
+# Workload Detection Based on Electroencephalograms (EEG)
 
 
 ## Summary
@@ -36,4 +36,8 @@ We provide a script code to create input data for training **Mental Workload det
 ```
    main_create_input_data.py
 ```
+
+## Further information
+
+You can visit the web of our [Research Group](http://iam.cvc.uab.es/).
 
