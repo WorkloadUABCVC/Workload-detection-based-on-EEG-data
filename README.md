@@ -32,9 +32,9 @@ We provide a script code to create input data for training **Mental Workload det
 
   Options you can change are the **dataset**,  the **window_size**, the **window_overlapping**, and the **filtering method**.
   
-2. Next, run the script
+2. Next, **run** the script
 ```
-   main_create_input_data.py
+   python main_create_input_data.py
 ```
 
 ## Further information
