@@ -1,4 +1,4 @@
-# Workload Detection Based on Electroencephalograms (EEG)
+# Mental Workload Detection Based on Electroencephalograms (EEG)
 
 
 ## Summary
