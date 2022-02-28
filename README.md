@@ -13,15 +13,15 @@ We provide a script code to create input data for training **Mental Workload det
 
 ## Preparation
 
-* In the root of your project, create make sure to creat two folders: /data and /input_features, then your data directories will be:
+* In the root of your project, make sure to create two folders: /data and /input_features. 
 ```
    ~/    
       /data/     
       /input_features/
 ```   
 
-* Put the donwloades dataset in /data.
-* After running the main script, data generated will be in /input_features
+* Put the donwloaded dataset in /data.
+* At the end,  the generated data will be in /input_features
 
 ## Running the code
 
@@ -30,7 +30,7 @@ We provide a script code to create input data for training **Mental Workload det
    eeg_config.py   
 ```
 
-  Options you can change are the **dataset**,  the **window_size**, the **window_overlapping**, and the **filtering method**.
+  The options you can change are: the **dataset**,  the **window_size**, the **window_overlapping**, and the **filtering method**.
   
 2. Next, **run** the script
 ```
