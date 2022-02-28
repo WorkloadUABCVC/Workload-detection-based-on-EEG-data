@@ -1,9 +1,9 @@
-# Mental Workload Detection Based on Electroencephalograms (EEG)
+# Mental Workload Detection Based on Electroencephalograms
 
 
 ## Summary
 
-We provide a script code to create input data for training **Mental Workload detectors** based en **Electroencephalogram** (EEG) signals.
+We provide some code to create input data for training **Mental Workload detectors** based en **Electroencephalogram** (EEG) signals.
 
 
 ## Requirements
