@@ -21,7 +21,7 @@ We provide some code to create input data for training **Mental Workload detecto
 ```   
 
 * Put the donwloaded dataset in /data.
-* At the end,  the generated data will be in /input_features
+* At the end,  the generated input data for your model will be located in /input_features
 
 ## Running the code
 
