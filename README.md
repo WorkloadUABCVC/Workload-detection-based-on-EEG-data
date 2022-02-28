@@ -25,11 +25,12 @@ We provide a script code to create input data for training **Mental Workload det
 
 ## Running the code
 
-1. **Change the options** of data preparation by editing directly the file.
+1. **Select different options** of data preparation by editing directly the file.
 ```
    eeg_config.py   
 ```
-  Here, for example, the name of the **dataset to be processed**,  the **window size**, the **window overlapping**, the **filtering method**, etc.
+
+  Options you can change are the **dataset**,  the **window_size**, the **window_overlapping**, and the **filtering method**.
   
 2. Next, run the script
 ```
