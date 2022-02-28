@@ -9,7 +9,7 @@ We provide a script code to create input data for training **Mental Workload det
 ## Requirements
 
 * Dataset: From the [Epilots Dataset repository](http://iam.cvc.uab.es/portfolio/e-pilots-dataset/), download the dataset [Serious Games Dataset](http://iam.cvc.uab.es/data-from-serious-games/).
-* Python 3, Pandas with pluging Pyarrow, and other minors.
+* Python 3, Pandas, Pyarrow, and other minors.
 
 ## Preparation
 
