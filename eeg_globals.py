@@ -2,7 +2,7 @@ PSF = 8 # power spectral frequency
 RSF = 128 # raw data sampling frequency
 
 user_metalabels = ['datetime', 'subject', 'test', 'phase'] # DataFrame columns that contains the labels of pre-processed data
-
+flight_metalabels = ['datetime', 'subject', 'flight', 'flight_number', 'with_interruptions', 'event', 'phase']
 
 pow_theta_nodes = ['POW.AF3.Theta',
  'POW.F7.Theta',

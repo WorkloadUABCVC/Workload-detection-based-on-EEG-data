@@ -31,8 +31,6 @@ def cut_signal(eeg_df, dic_cut_opts):
                                 (eeg_df.test==test) &
                                 (eeg_df.phase==phase)].copy()
                 df = df.reset_index(drop=True)
-
-
                 n_intervals = int(np.floor(( df.shape[0] - sample_win ) / sample_stride) + 1)
                 for k in range(n_intervals):
                     data = df.iloc[k * sample_stride : k * sample_stride + sample_win].copy()
@@ -46,6 +44,43 @@ def cut_signal(eeg_df, dic_cut_opts):
     print(eeg_window.shape)
 
     return eeg_window
+
+def cut_signal_simulator(eeg_df, dic_cut):
+    labels = list(eeg_df.columns)
+
+    sample_win = int(PSF * dic_cut['window'])
+    sample_over = int(PSF * dic_cut['overlap'])
+    sample_stride = sample_win - sample_over
+
+    # To data, add a column observation based on phase
+    print('split data into observations')
+
+    eeg_window = []
+    for subject in eeg_df.subject.unique():
+        print(subject)
+        for flight_number in  eeg_df.flight_number.unique():
+            print('     ' + str(flight_number))
+            for phase in eeg_df.phase.unique():
+                print('         ' + str(phase))
+
+                df = eeg_df.loc[(eeg_df.subject==subject) &
+                                (eeg_df.flight_number==flight_number) &
+                                (eeg_df.phase==phase)].copy()
+                df = df.reset_index(drop=True)
+
+                n_intervals = int(np.floor(( df.shape[0] - sample_win ) / sample_stride) + 1)
+                for k in range(n_intervals):
+                    data = df.iloc[k * sample_stride : k * sample_stride + sample_win].copy()
+                    data = data.reset_index(drop=True)
+                    data['observation'] = k + 1
+                    eeg_window.append(data)
+                    del data
+                del df
+
+    eeg_window  = pd.concat(eeg_window, axis=0, ignore_index=True)
+    return eeg_window
+
+
 
 def filter_signal(eeg_df, iqrs, dic_filt_opts):
     """
@@ -100,8 +135,10 @@ def filter_signal(eeg_df, iqrs, dic_filt_opts):
 
 def input_features(eeg_df, start_col='subject'):
     """
-    Organize the eeg_df dataframe onto a numpy structure ready to feed into
+    Organize the eeg_df dataframe into a numpy structure ready to feed to
     the model
+
+    start_col : is the column where the metadata starts
 
     Returns
     -------
@@ -171,6 +208,82 @@ def input_features(eeg_df, start_col='subject'):
     data_y = np.concatenate(data_y, axis=0) # (n_samples, ...)
     return data_x, data_y
 
+
+def input_features_simulator(eeg_df, start_col='subject'):
+    """
+    Organize the eeg_df dataframe into a numpy structure ready to feed to
+    the model
+
+    start_col : is the column where the metadata starts
+
+    Returns
+    -------
+    data_x : numpy
+        data of signals [n_samples, n_waves, n_nodes, timesteps]
+
+    data_y : numpy
+        metadata of signals [n_samples, subject...]
+
+    """
+    labels = list(eeg_df.columns)
+    power_nodes = [i for i in labels if i.startswith('POW')]
+    pos_subject = labels.index(start_col)
+
+    if len(power_nodes) != 70: # 14 electrodes * 5 waves
+        print('The number of nodes does not match the Emotiv 14 headset')
+        return
+
+    # data and labels are into separated files
+    data_x = []
+    data_y = []
+    for subject in eeg_df.subject.unique():
+        print(subject)
+        for flight_number in  eeg_df.flight_number.unique():
+            print('     ' + str(flight_number))
+            for phase in eeg_df.phase.unique():
+                print('         ' + str(phase))
+
+                signal_arr = []
+                target_arr = ''
+                for idx, wave in enumerate(all_pow_waves):
+
+                    data_labels = dic_pow_waves[wave]
+                    meta_labels = labels[pos_subject : ]  # [70 : ]
+                    labels_sel = data_labels + meta_labels
+
+
+                    df = eeg_df.loc[(eeg_df.subject==subject) &
+                            (eeg_df.flight_number==flight_number) &
+                            (eeg_df.phase==phase), labels_sel].copy()
+                    df = df.reset_index(drop=True)
+
+                    signal = []
+                    target = []
+                    for obs in df.observation.unique():
+                        x = df.loc[df.observation == obs].values[:, :len(labels_sel) - len(meta_labels)].T  # data
+                        y = df.loc[df.observation == obs].values[0 , len(labels_sel) - len(meta_labels) : ] # metadata
+                        signal.append(x)
+                        target.append(y)
+                        del x, y
+                    del df
+
+                    signal_arr.append(np.array(signal))
+                    if idx == 0:
+                        target_arr = np.array(target) # save labels from only the first passing
+                    del signal, target
+
+                # stack signals [signals, wave, n_nodes, timesteps]
+                signal_arr = np.stack((signal_arr), axis=1)
+                if signal_arr.ndim == 4:
+                    data_x.append(signal_arr)
+                    data_y.append(target_arr)
+                del signal_arr, target_arr
+
+    # concatenate along the rows axis
+    data_x = np.concatenate(data_x, axis=0) # (n_samples, n_waves, n_nodes, time_step)
+    data_x = data_x.astype(np.float32)
+    data_y = np.concatenate(data_y, axis=0) # (n_samples, ...)
+    return data_x, data_y
 
 
 def iqr_load_precomputed(dic_filt_opts):

@@ -1,5 +1,9 @@
-# dataset   = 'selected' # What is the prefix of the dataset ?
-dataset   = 'seriousgame'
+# What is the prefix of the dataset  to be processed?
+
+# dataset   = 'selected'
+# dataset   = 'seriousgame'
+# dataset   = 'sabadell'
+dataset = 'fram260721'
 
 dic_filt_opts = {
     'filtered'  : True, # Will dataset be filtererd?

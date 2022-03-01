@@ -21,27 +21,28 @@ from eeg_config import *
 from eeg_functions import *
 
 
-
 filename = dataset + '_eeg.parquet'
 eeg_df = pd.read_parquet('./data/' +  filename)
 print('processing ', filename)
 
 
 print('Step 1. Get power spectral and contact quality channels, parquet loaded ', eeg_df.shape)
-selected_cols = all_pow_nodes + user_metalabels # to filter just the selected columns
+if dataset in ['selected', 'seriousgame']:
+    selected_cols = all_pow_nodes + user_metalabels # to filter just the selected columns
+else:
+    selected_cols = all_pow_nodes + flight_metalabels
+
 eeg_df = eeg_df[selected_cols]
-eeg_df = eeg_df.loc[(eeg_df.phase==1) | (eeg_df.phase==2 ) ] # filter just Phase1= BL and Phase2=WL
 eeg_df = eeg_df.dropna()  # Drop  NaN because PS samples are shorter than the in raw_data
 eeg_df = eeg_df.reset_index(drop=True)  # reset index
 
 
 print('Step 2. Split data into small windows and compute on them a quality index, parquet loaded ', eeg_df.shape)
 
-if 'simulator' in dataset:
+if dataset in ['fram260721', 'sabadell']:
     eeg_df = cut_signal_simulator(eeg_df, dic_cut_opts) # replace by a new version of Aura
 else:
     eeg_df = cut_signal(eeg_df, dic_cut_opts)
-
 
 print('Step 3. Filtering data, parquet loaded ', eeg_df.shape)
 filename_new = filename.split('.')[0] + '_power_filt_'
@@ -60,16 +61,14 @@ if dic_filt_opts['filtered']:
     if dic_filt_opts['IQRtype'] == 'new':
         filename_new += '_' + dic_filt_opts['IQRTh']
 else:
-
     filename_new += 'none'
     print('\tNo filtering dataset')
-
 
 print('Step 4. Create input features, parquet loaded ', eeg_df.shape)
 
 filename_new += '_window_' + str(dic_cut_opts['window']) + '_' + str(dic_cut_opts['overlap'])
 
-if 'simulator' in dataset:
+if dataset in  ['fram260721', 'sabadell']:
     data_x, data_y = input_features_simulator(eeg_df) # replace by a new version of Aura
 else:
     data_x, data_y = input_features(eeg_df)
