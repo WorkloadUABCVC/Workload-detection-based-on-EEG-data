@@ -1,6 +1,6 @@
 # Mental Workload Detection Based on Electroencephalograms
 
-![Alt text](figs/experiment.png?raw=true "Title")
+![Alt text](figs/voluntary.png?raw=true "A voluntary facing a test")
 
 ## Summary
 
