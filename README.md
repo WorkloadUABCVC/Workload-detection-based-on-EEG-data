@@ -1,5 +1,6 @@
 # Mental Workload Detection Based on Electroencephalograms
 
+![Alt text](figs/experiment.png?raw=true "Title")
 
 ## Summary
 
