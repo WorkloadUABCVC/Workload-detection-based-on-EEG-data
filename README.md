@@ -4,12 +4,15 @@
 
 ## Summary
 
-We provide some code to create input data for training **Mental Workload detectors** based en **Electroencephalogram** (EEG) signals.
+We provide some code to create the input data for training **Mental Workload detectors** based en **Electroencephalogram** (EEG) signals.
 
 
 ## Requirements
 
-* Dataset: From the [Epilots Dataset repository](http://iam.cvc.uab.es/portfolio/e-pilots-dataset/), download the dataset [Serious Games Dataset](http://iam.cvc.uab.es/data-from-serious-games/).
+* Dataset: From the ["Dataset to predict mental workload based on physiological data"](https://doi.org/10.5565/ddd.uab.cat/259591),  download the EEG  data from the N-back test or the Heat-The-Chair game.
+
+
+
 * Python 3, Pandas, Pyarrow, and other minors.
 
 ## Preparation
@@ -41,4 +44,6 @@ We provide some code to create input data for training **Mental Workload detecto
 ## Further information
 
 You can visit the web of our [Research Group](http://iam.cvc.uab.es/).
+
+
 
