@@ -1,8 +1,7 @@
 """
 main data loader generator
 
-Use this script to process the EEG data from
-the N-back test or the Heath-The-Chair Game
+Use this script to process the EEG data of the N-back test or the Heath-The-Chair Game
 
 Updated 2022/06/10
 
@@ -39,7 +38,7 @@ eeg_df = eeg_df.reset_index(drop=True)  # reset index
 
 
 print('Step 2. Split data into small windows and compute on them a quality index, parquet loaded ', eeg_df.shape)
-eeg_df = cut_signal_simulator(eeg_df, dic_cut_opts) # replace by a new version of Aura
+eeg_df = cut_signal(eeg_df, dic_cut_opts) # replace by a new version of Aura
 
 
 print('Step 3. Filtering data, parquet loaded ', eeg_df.shape)
