@@ -13,7 +13,7 @@ We provide some code to create the input data for training **Mental Workload det
 
 
 
-* Python 3, Pandas, Pyarrow, and other minors.
+* Python 3.8+, Pandas 1.4+, Pyarrow 8.0+, and other minors.
 
 ## Preparation
 
