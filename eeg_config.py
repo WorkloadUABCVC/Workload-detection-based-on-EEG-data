@@ -1,9 +1,6 @@
-# What is the prefix of the dataset  to be processed?
+# define the dataset to be processed
 
-# dataset   = 'selected'
-# dataset   = 'seriousgame'
-# dataset   = 'sabadell'
-dataset = 'fram260721'
+dataset   = 'eeg'
 
 dic_filt_opts = {
     'filtered'  : True, # Will dataset be filtererd?
@@ -16,6 +13,6 @@ dic_filt_opts = {
     'IQRTh'     : 'iqr', # qup o iqr
     }
 
-dic_cut_opts = {'window'    : 10, # window size in seconds
+dic_cut_opts = {'window'    : 5, # window size in seconds
                 'overlap'   : 0, # overlapping in seconds
                 }
